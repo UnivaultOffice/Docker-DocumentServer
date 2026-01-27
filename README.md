@@ -4,14 +4,14 @@
 * [Running Docker Image](#running-docker-image)
 * [Configuring Docker Image](#configuring-docker-image)
     - [Storing Data](#storing-data)
-    - [Running ONLYOFFICE Document Server on Different Port](#running-onlyoffice-document-server-on-different-port)
-    - [Running ONLYOFFICE Document Server using HTTPS](#running-onlyoffice-document-server-using-https)
+    - [Running UNIVAULTOFFICE Document Server on Different Port](#running-univaultoffice-document-server-on-different-port)
+    - [Running UNIVAULTOFFICE Document Server using HTTPS](#running-univaultoffice-document-server-using-https)
         + [Generation of Self Signed Certificates](#generation-of-self-signed-certificates)
         + [Strengthening the Server Security](#strengthening-the-server-security)
         + [Installation of the SSL Certificates](#installation-of-the-ssl-certificates)
         + [Available Configuration Parameters](#available-configuration-parameters)
-* [Installing ONLYOFFICE Document Server integrated with Community and Mail Servers](#installing-onlyoffice-document-server-integrated-with-community-and-mail-servers)
-* [ONLYOFFICE Document Server ipv6 setup](#onlyoffice-document-server-ipv6-setup)
+* [Installing UNIVAULTOFFICE Document Server integrated with Community and Mail Servers](#installing-univaultoffice-document-server-integrated-with-community-and-mail-servers)
+* [UNIVAULTOFFICE Document Server ipv6 setup](#univaultoffice-document-server-ipv6-setup)
 * [Issues](#issues)
     - [Docker Issues](#docker-issues)
     - [Document Server usage Issues](#document-server-usage-issues)
@@ -20,34 +20,34 @@
 
 ## Overview
 
-ONLYOFFICE Docs (Document Server) is an open-source office suite that comprises all the tools you need to work with documents, spreadsheets, presentations, PDFs, and PDF forms. The suite supports office files of all popular formats (DOCX, ODT, XLSX, ODS, CSV, PPTX, ODP, etc.) and enables collaborative editing in real time.
+UNIVAULTOFFICE Docs (Document Server) is an open-source office suite that comprises all the tools you need to work with documents, spreadsheets, presentations, PDFs, and PDF forms. The suite supports office files of all popular formats (DOCX, ODT, XLSX, ODS, CSV, PPTX, ODP, etc.) and enables collaborative editing in real time.
 
-Starting from version 6.0, Document Server is distributed as ONLYOFFICE Docs. It has [three editions](https://github.com/ONLYOFFICE/DocumentServer#onlyoffice-docs-editions). With this image, you will install the free Community version. 
+Starting from version 6.0, Document Server is distributed as UNIVAULTOFFICE Docs. It has [three editions](https://github.com/UnivaultOffice/DocumentServer#univaultoffice-docs-editions). With this image, you will install the free Community version. 
 
-ONLYOFFICE Docs can be used as a part of [ONLYOFFICE DocSpace](https://www.onlyoffice.com/docspace.aspx) and ONLYOFFICE Workspace, or with [third-party sync&share solutions](https://www.onlyoffice.com/all-connectors.aspx) (e.g. Odoo, Moodle, Nextcloud, ownCloud, Seafile, etc.) to enable collaborative editing within their interface.
+UNIVAULTOFFICE Docs can be used as a part of [UNIVAULTOFFICE DocSpace](https://www.univaultoffice.github.io/docspace.aspx) and UNIVAULTOFFICE Workspace, or with [third-party sync&share solutions](https://www.univaultoffice.github.io/all-connectors.aspx) (e.g. Odoo, Moodle, Nextcloud, ownCloud, Seafile, etc.) to enable collaborative editing within their interface.
 
 ***Important*** Please update `docker-engine` to latest version (`20.10.21` as of writing this doc) before using it. We use `ubuntu:24.04` as base image and it older versions of docker have compatibility problems with it
 
 ## Functionality ##
 
-Take advantage of the powerful editors included in ONLYOFFICE Docs:
+Take advantage of the powerful editors included in UNIVAULTOFFICE Docs:
 
-* [ONLYOFFICE Document Editor](https://www.onlyoffice.com/document-editor.aspx)
-* [ONLYOFFICE Spreadsheet Editor](https://www.onlyoffice.com/spreadsheet-editor.aspx)
-* [ONLYOFFICE Presentation Editor](https://www.onlyoffice.com/presentation-editor.aspx)
-* [ONLYOFFICE Form Creator](https://www.onlyoffice.com/form-creator.aspx)
-* [ONLYOFFICE PDF Editor](https://www.onlyoffice.com/pdf-editor.aspx)
-* [ONLYOFFICE Diagram Viewer](https://www.onlyoffice.com/diagram-viewer.aspx) 
+* [UNIVAULTOFFICE Document Editor](https://www.univaultoffice.github.io/document-editor.aspx)
+* [UNIVAULTOFFICE Spreadsheet Editor](https://www.univaultoffice.github.io/spreadsheet-editor.aspx)
+* [UNIVAULTOFFICE Presentation Editor](https://www.univaultoffice.github.io/presentation-editor.aspx)
+* [UNIVAULTOFFICE Form Creator](https://www.univaultoffice.github.io/form-creator.aspx)
+* [UNIVAULTOFFICE PDF Editor](https://www.univaultoffice.github.io/pdf-editor.aspx)
+* [UNIVAULTOFFICE Diagram Viewer](https://www.univaultoffice.github.io/diagram-viewer.aspx) 
 
 The editors empower you to create, edit, save, and export text docs, sheets, presentations, PDFs, create and fill out PDF forms, open diagrams, all while offering additional advanced features such as:
 
 * Collaborative editing (review & track changes, comments, chat)
-* [AI-powered assistants](https://www.onlyoffice.com/ai-assistants.aspx) 
+* [AI-powered assistants](https://www.univaultoffice.github.io/ai-assistants.aspx) 
 * Spell-checking 
 * Scalable UI options (including dark mode)
-* [Security tools & services](https://www.onlyoffice.com/security.aspx)
+* [Security tools & services](https://www.univaultoffice.github.io/security.aspx)
 
-ONLYOFFICE Docs offer support for plugins allowing you to add specific features to the editors that are not directly related to the OOXML format. For more details, see [our API](https://api.onlyoffice.com/docs/plugin-and-macros/get-started/overview/) or visit the [plugins repo](https://github.com/ONLYOFFICE/onlyoffice.github.io). Would like to explore the existing plugins? Open the [Marketplace](https://www.onlyoffice.com/app-directory).
+UNIVAULTOFFICE Docs offer support for plugins allowing you to add specific features to the editors that are not directly related to the OOXML format. For more details, see [our API](https://api.univaultoffice.github.io/docs/plugin-and-macros/get-started/overview/) or visit the [plugins repo](https://github.com/UnivaultOffice/univaultoffice.github.io). Would like to explore the existing plugins? Open the [Marketplace](https://www.univaultoffice.github.io/app-directory).
 
 ## Recommended System Requirements
 
@@ -60,47 +60,47 @@ ONLYOFFICE Docs offer support for plugins allowing you to add specific features 
 
 ## Running Docker Image
 
-    sudo docker run -i -t -d -p 80:80 onlyoffice/documentserver
+    sudo docker run -i -t -d -p 80:80 univaultoffice/documentserver
 
-Use this command if you wish to install ONLYOFFICE Document Server separately. To install ONLYOFFICE Document Server integrated with Community and Mail Servers, refer to the corresponding instructions below.
+Use this command if you wish to install UNIVAULTOFFICE Document Server separately. To install UNIVAULTOFFICE Document Server integrated with Community and Mail Servers, refer to the corresponding instructions below.
 
 ## Configuring Docker Image
 
 ### Storing Data
 
 All the data are stored in the specially-designated directories, **data volumes**, at the following location:
-* **/var/log/onlyoffice** for ONLYOFFICE Document Server logs
-* **/var/www/onlyoffice/Data** for certificates
-* **/var/lib/onlyoffice** for file cache
+* **/var/log/univaultoffice** for UNIVAULTOFFICE Document Server logs
+* **/var/www/univaultoffice/Data** for certificates
+* **/var/lib/univaultoffice** for file cache
 * **/var/lib/postgresql** for database
 
 To get access to your data from outside the container, you need to mount the volumes. It can be done by specifying the '-v' option in the docker run command.
 
     sudo docker run -i -t -d -p 80:80 \
-        -v /app/onlyoffice/DocumentServer/logs:/var/log/onlyoffice  \
-        -v /app/onlyoffice/DocumentServer/data:/var/www/onlyoffice/Data  \
-        -v /app/onlyoffice/DocumentServer/lib:/var/lib/onlyoffice \
-        -v /app/onlyoffice/DocumentServer/rabbitmq:/var/lib/rabbitmq \
-        -v /app/onlyoffice/DocumentServer/redis:/var/lib/redis \
-        -v /app/onlyoffice/DocumentServer/db:/var/lib/postgresql  onlyoffice/documentserver
+        -v /app/univaultoffice/DocumentServer/logs:/var/log/univaultoffice  \
+        -v /app/univaultoffice/DocumentServer/data:/var/www/univaultoffice/Data  \
+        -v /app/univaultoffice/DocumentServer/lib:/var/lib/univaultoffice \
+        -v /app/univaultoffice/DocumentServer/rabbitmq:/var/lib/rabbitmq \
+        -v /app/univaultoffice/DocumentServer/redis:/var/lib/redis \
+        -v /app/univaultoffice/DocumentServer/db:/var/lib/postgresql  univaultoffice/documentserver
 
 Normally, you do not need to store container data because the container's operation does not depend on its state. Saving data will be useful:
 * For easy access to container data, such as logs
 * To remove the limit on the size of the data inside the container
 * When using services launched outside the container such as PostgreSQL, Redis, RabbitMQ
 
-### Running ONLYOFFICE Document Server on Different Port
+### Running UNIVAULTOFFICE Document Server on Different Port
 
 To change the port, use the -p command. E.g.: to make your portal accessible via port 8080 execute the following command:
 
-    sudo docker run -i -t -d -p 8080:80 onlyoffice/documentserver
+    sudo docker run -i -t -d -p 8080:80 univaultoffice/documentserver
 
-### Running ONLYOFFICE Document Server using HTTPS
+### Running UNIVAULTOFFICE Document Server using HTTPS
 
         sudo docker run -i -t -d -p 443:443 \
-        -v /app/onlyoffice/DocumentServer/data:/var/www/onlyoffice/Data  onlyoffice/documentserver
+        -v /app/univaultoffice/DocumentServer/data:/var/www/univaultoffice/Data  univaultoffice/documentserver
 
-Access to the ONLYOFFICE application can be secured using SSL so as to prevent unauthorized access. While a CA certified SSL certificate allows for verification of trust via the CA, a self-signed certificate can also provide an equal level of trust verification as long as each client takes some additional steps to verify the identity of your website. Below the instructions on achieving this are provided.
+Access to the UNIVAULTOFFICE application can be secured using SSL so as to prevent unauthorized access. While a CA certified SSL certificate allows for verification of trust via the CA, a self-signed certificate can also provide an equal level of trust verification as long as each client takes some additional steps to verify the identity of your website. Below the instructions on achieving this are provided.
 
 To secure the application via SSL basically two things are needed:
 
@@ -109,15 +109,15 @@ To secure the application via SSL basically two things are needed:
 
 So you need to create and install the following files:
 
-        /app/onlyoffice/DocumentServer/data/certs/tls.key
-        /app/onlyoffice/DocumentServer/data/certs/tls.crt
+        /app/univaultoffice/DocumentServer/data/certs/tls.key
+        /app/univaultoffice/DocumentServer/data/certs/tls.crt
 
 When using CA certified certificates (e.g. [Let's Encrypt](https://letsencrypt.org)), these files are provided to you by the CA. If you are using self-signed certificates you need to generate these files [yourself](#generation-of-self-signed-certificates).
 
 #### Using the automatically generated Let's Encrypt SSL Certificates
 
         sudo docker run -i -t -d -p 80:80 -p 443:443 \
-        -e LETS_ENCRYPT_DOMAIN=your_domain -e LETS_ENCRYPT_MAIL=your_mail  onlyoffice/documentserver
+        -e LETS_ENCRYPT_DOMAIN=your_domain -e LETS_ENCRYPT_MAIL=your_mail  univaultoffice/documentserver
 
 If you want to get and extend Let's Encrypt SSL Certificates automatically just set LETS_ENCRYPT_DOMAIN and LETS_ENCRYPT_MAIL variables.
 
@@ -156,18 +156,18 @@ openssl dhparam -out dhparam.pem 2048
 
 #### Installation of the SSL Certificates
 
-Out of the four files generated above, you need to install the `tls.key`, `tls.crt` and `dhparam.pem` files at the ONLYOFFICE server. The CSR file is not needed, but do make sure you safely backup the file (in case you ever need it again).
+Out of the four files generated above, you need to install the `tls.key`, `tls.crt` and `dhparam.pem` files at the UNIVAULTOFFICE server. The CSR file is not needed, but do make sure you safely backup the file (in case you ever need it again).
 
-The default path that the ONLYOFFICE application is configured to look for the SSL certificates is at `/var/www/onlyoffice/Data/certs`, this can however be changed using the `SSL_KEY_PATH`, `SSL_CERTIFICATE_PATH` and `SSL_DHPARAM_PATH` configuration options.
+The default path that the UNIVAULTOFFICE application is configured to look for the SSL certificates is at `/var/www/univaultoffice/Data/certs`, this can however be changed using the `SSL_KEY_PATH`, `SSL_CERTIFICATE_PATH` and `SSL_DHPARAM_PATH` configuration options.
 
-The `/var/www/onlyoffice/Data/` path is the path of the data store, which means that you have to create a folder named certs inside `/app/onlyoffice/DocumentServer/data/` and copy the files into it and as a measure of security you will update the permission on the `tls.key` file to only be readable by the owner.
+The `/var/www/univaultoffice/Data/` path is the path of the data store, which means that you have to create a folder named certs inside `/app/univaultoffice/DocumentServer/data/` and copy the files into it and as a measure of security you will update the permission on the `tls.key` file to only be readable by the owner.
 
 ```bash
-mkdir -p /app/onlyoffice/DocumentServer/data/certs
-cp tls.key /app/onlyoffice/DocumentServer/data/certs/
-cp tls.crt /app/onlyoffice/DocumentServer/data/certs/
-cp dhparam.pem /app/onlyoffice/DocumentServer/data/certs/
-chmod 400 /app/onlyoffice/DocumentServer/data/certs/tls.key
+mkdir -p /app/univaultoffice/DocumentServer/data/certs
+cp tls.key /app/univaultoffice/DocumentServer/data/certs/
+cp tls.crt /app/univaultoffice/DocumentServer/data/certs/
+cp dhparam.pem /app/univaultoffice/DocumentServer/data/certs/
+chmod 400 /app/univaultoffice/DocumentServer/data/certs/tls.key
 ```
 
 You are now just one step away from having our application secured.
@@ -178,13 +178,13 @@ You are now just one step away from having our application secured.
 
 Below is the complete list of parameters that can be set using environment variables.
 
-- **ONLYOFFICE_HTTPS_HSTS_ENABLED**: Advanced configuration option for turning off the HSTS configuration. Applicable only when SSL is in use. Defaults to `true`.
-- **ONLYOFFICE_HTTPS_HSTS_MAXAGE**: Advanced configuration option for setting the HSTS max-age in the ONLYOFFICE nginx vHost configuration. Applicable only when SSL is in use. Defaults to `31536000`.
-- **SSL_CERTIFICATE_PATH**: The path to the SSL certificate to use. Defaults to `/var/www/onlyoffice/Data/certs/tls.crt`.
-- **SSL_KEY_PATH**: The path to the SSL certificate's private key. Defaults to `/var/www/onlyoffice/Data/certs/tls.key`.
-- **SSL_DHPARAM_PATH**: The path to the Diffie-Hellman parameter. Defaults to `/var/www/onlyoffice/Data/certs/dhparam.pem`.
+- **UNIVAULTOFFICE_HTTPS_HSTS_ENABLED**: Advanced configuration option for turning off the HSTS configuration. Applicable only when SSL is in use. Defaults to `true`.
+- **UNIVAULTOFFICE_HTTPS_HSTS_MAXAGE**: Advanced configuration option for setting the HSTS max-age in the UNIVAULTOFFICE nginx vHost configuration. Applicable only when SSL is in use. Defaults to `31536000`.
+- **SSL_CERTIFICATE_PATH**: The path to the SSL certificate to use. Defaults to `/var/www/univaultoffice/Data/certs/tls.crt`.
+- **SSL_KEY_PATH**: The path to the SSL certificate's private key. Defaults to `/var/www/univaultoffice/Data/certs/tls.key`.
+- **SSL_DHPARAM_PATH**: The path to the Diffie-Hellman parameter. Defaults to `/var/www/univaultoffice/Data/certs/dhparam.pem`.
 - **SSL_VERIFY_CLIENT**: Enable verification of client certificates using the `CA_CERTIFICATES_PATH` file. Defaults to `false`
-- **NODE_EXTRA_CA_CERTS**: The [NODE_EXTRA_CA_CERTS](https://nodejs.org/api/cli.html#node_extra_ca_certsfile "Node.js documentation") to extend CAs with the extra certificates for Node.js. Defaults to `/var/www/onlyoffice/Data/certs/extra-ca-certs.pem`.
+- **NODE_EXTRA_CA_CERTS**: The [NODE_EXTRA_CA_CERTS](https://nodejs.org/api/cli.html#node_extra_ca_certsfile "Node.js documentation") to extend CAs with the extra certificates for Node.js. Defaults to `/var/www/univaultoffice/Data/certs/extra-ca-certs.pem`.
 - **DB_TYPE**: The database type. Supported values are `postgres`, `mariadb`, `mysql`, `mssql` or `oracle`. Defaults to `postgres`.
 - **DB_HOST**: The IP address or the name of the host where the database server is running.
 - **DB_PORT**: The database server port number.
@@ -205,16 +205,16 @@ Below is the complete list of parameters that can be set using environment varia
 - **NGINX_WORKER_CONNECTIONS**: Sets the maximum number of simultaneous connections that can be opened by a nginx worker process.
 - **NGINX_ACCESS_LOG**: Defines whether access logging is enabled. Defaults to `false`.
 - **SECURE_LINK_SECRET**: Defines secret for the nginx config directive [secure_link_md5](https://nginx.org/en/docs/http/ngx_http_secure_link_module.html#secure_link_md5). Defaults to `random string`.
-- **JWT_ENABLED**: Specifies the enabling the JSON Web Token validation by the ONLYOFFICE Document Server. Defaults to `true`.
-- **JWT_SECRET**: Defines the secret key to validate the JSON Web Token in the request to the ONLYOFFICE Document Server. Defaults to random value.
+- **JWT_ENABLED**: Specifies the enabling the JSON Web Token validation by the UNIVAULTOFFICE Document Server. Defaults to `true`.
+- **JWT_SECRET**: Defines the secret key to validate the JSON Web Token in the request to the UNIVAULTOFFICE Document Server. Defaults to random value.
 - **JWT_HEADER**: Defines the http header that will be used to send the JSON Web Token. Defaults to `Authorization`.
-- **JWT_IN_BODY**: Specifies the enabling the token validation in the request body to the ONLYOFFICE Document Server. Defaults to `false`.
+- **JWT_IN_BODY**: Specifies the enabling the token validation in the request body to the UNIVAULTOFFICE Document Server. Defaults to `false`.
 - **WOPI_ENABLED**: Specifies the enabling the wopi handlers. Defaults to `false`.
 - **ALLOW_META_IP_ADDRESS**: Defines if it is allowed to connect meta IP address or not. Defaults to `false`.
 - **ALLOW_PRIVATE_IP_ADDRESS**: Defines if it is allowed to connect private IP address or not. Defaults to `false`.
 - **USE_UNAUTHORIZED_STORAGE**: Set to `true` if using self-signed certificates for your storage server e.g. Nextcloud. Defaults to `false`
 - **GENERATE_FONTS**: When 'true' regenerates fonts list and the fonts thumbnails etc. at each start. Defaults to `true`
-- **METRICS_ENABLED**: Specifies the enabling StatsD for ONLYOFFICE Document Server. Defaults to `false`.
+- **METRICS_ENABLED**: Specifies the enabling StatsD for UNIVAULTOFFICE Document Server. Defaults to `false`.
 - **METRICS_HOST**: Defines StatsD listening host. Defaults to `localhost`.
 - **METRICS_PORT**: Defines StatsD listening port. Defaults to `8125`.
 - **METRICS_PREFIX**: Defines StatsD metrics prefix for backend services. Defaults to `ds.`.
@@ -222,14 +222,14 @@ Below is the complete list of parameters that can be set using environment varia
 - **LETS_ENCRYPT_MAIL**: Defines the domain administrator mail address for Let's Encrypt certificate.
 - **PLUGINS_ENABLED**: Defines whether to enable default plugins. Defaults to `true`.
 
-## Installing ONLYOFFICE Document Server using Docker Compose
+## Installing UNIVAULTOFFICE Document Server using Docker Compose
 
-You can also install ONLYOFFICE Document Server using [docker-compose](https://docs.docker.com/compose/install "docker-compose"). 
+You can also install UNIVAULTOFFICE Document Server using [docker-compose](https://docs.docker.com/compose/install "docker-compose"). 
 
-First you need to clone this [GitHub repository](https://github.com/ONLYOFFICE/Docker-DocumentServer/):
+First you need to clone this [GitHub repository](https://github.com/UnivaultOffice/Docker-DocumentServer/):
 
 ```bash
-git clone https://github.com/ONLYOFFICE/Docker-DocumentServer
+git clone https://github.com/UnivaultOffice/Docker-DocumentServer
 ```
 
 After that switch to the repository folder:
@@ -244,16 +244,16 @@ After that, assuming you have docker-compose installed, execute the following co
 docker-compose up -d
 ```
 
-## Installing ONLYOFFICE Document Server as a part of ONLYOFFICE Workspace
+## Installing UNIVAULTOFFICE Document Server as a part of UNIVAULTOFFICE Workspace
 
-ONLYOFFICE Document Server is a part of ONLYOFFICE Workspace that comprises also Community Server, Mail Server, and Control Panel. To install them, follow these easy steps:
+UNIVAULTOFFICE Document Server is a part of UNIVAULTOFFICE Workspace that comprises also Community Server, Mail Server, and Control Panel. To install them, follow these easy steps:
 
-**STEP 1**: Create the `onlyoffice` network.
+**STEP 1**: Create the `univaultoffice` network.
 
 ```bash
-docker network create --driver bridge onlyoffice
+docker network create --driver bridge univaultoffice
 ```
-Then launch containers on it using the 'docker run --net onlyoffice' option:
+Then launch containers on it using the 'docker run --net univaultoffice' option:
 
 **STEP 2**: Install MySQL.
 
@@ -261,104 +261,104 @@ Follow [these steps](#installing-mysql) to install MySQL server.
 
 **STEP 3**: Generate JWT Secret
 
-JWT secret defines the secret key to validate the JSON Web Token in the request to the **ONLYOFFICE Document Server**. You can specify it yourself or easily get it using the command:
+JWT secret defines the secret key to validate the JSON Web Token in the request to the **UNIVAULTOFFICE Document Server**. You can specify it yourself or easily get it using the command:
 ```
 JWT_SECRET=$(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c 12);
 ```
 
-**STEP 4**: Install ONLYOFFICE Document Server.
+**STEP 4**: Install UNIVAULTOFFICE Document Server.
 
 ```bash
-sudo docker run --net onlyoffice -i -t -d --restart=always --name onlyoffice-document-server \
+sudo docker run --net univaultoffice -i -t -d --restart=always --name univaultoffice-document-server \
  -e JWT_ENABLED=true \
  -e JWT_SECRET=${JWT_SECRET} \
  -e JWT_HEADER=AuthorizationJwt \
- -v /app/onlyoffice/DocumentServer/logs:/var/log/onlyoffice  \
- -v /app/onlyoffice/DocumentServer/data:/var/www/onlyoffice/Data  \
- -v /app/onlyoffice/DocumentServer/lib:/var/lib/onlyoffice \
- -v /app/onlyoffice/DocumentServer/db:/var/lib/postgresql \
- onlyoffice/documentserver
+ -v /app/univaultoffice/DocumentServer/logs:/var/log/univaultoffice  \
+ -v /app/univaultoffice/DocumentServer/data:/var/www/univaultoffice/Data  \
+ -v /app/univaultoffice/DocumentServer/lib:/var/lib/univaultoffice \
+ -v /app/univaultoffice/DocumentServer/db:/var/lib/postgresql \
+ univaultoffice/documentserver
 ```
 
-**STEP 5**: Install ONLYOFFICE Mail Server. 
+**STEP 5**: Install UNIVAULTOFFICE Mail Server. 
 
 For the mail server correct work you need to specify its hostname 'yourdomain.com'.
 
 ```bash
-sudo docker run --init --net onlyoffice --privileged -i -t -d --restart=always --name onlyoffice-mail-server -p 25:25 -p 143:143 -p 587:587 \
- -e MYSQL_SERVER=onlyoffice-mysql-server \
+sudo docker run --init --net univaultoffice --privileged -i -t -d --restart=always --name univaultoffice-mail-server -p 25:25 -p 143:143 -p 587:587 \
+ -e MYSQL_SERVER=univaultoffice-mysql-server \
  -e MYSQL_SERVER_PORT=3306 \
  -e MYSQL_ROOT_USER=root \
  -e MYSQL_ROOT_PASSWD=my-secret-pw \
- -e MYSQL_SERVER_DB_NAME=onlyoffice_mailserver \
- -v /app/onlyoffice/MailServer/data:/var/vmail \
- -v /app/onlyoffice/MailServer/data/certs:/etc/pki/tls/mailserver \
- -v /app/onlyoffice/MailServer/logs:/var/log \
+ -e MYSQL_SERVER_DB_NAME=univaultoffice_mailserver \
+ -v /app/univaultoffice/MailServer/data:/var/vmail \
+ -v /app/univaultoffice/MailServer/data/certs:/etc/pki/tls/mailserver \
+ -v /app/univaultoffice/MailServer/logs:/var/log \
  -h yourdomain.com \
- onlyoffice/mailserver
+ univaultoffice/mailserver
 ```
 
-The additional parameters for mail server are available [here](https://github.com/ONLYOFFICE/Docker-CommunityServer/blob/master/docker-compose.workspace_enterprise.yml#L87).
+The additional parameters for mail server are available [here](https://github.com/UnivaultOffice/Docker-CommunityServer/blob/master/docker-compose.workspace_enterprise.yml#L87).
 
-To learn more, refer to the [ONLYOFFICE Mail Server documentation](https://github.com/ONLYOFFICE/Docker-MailServer "ONLYOFFICE Mail Server documentation").
+To learn more, refer to the [UNIVAULTOFFICE Mail Server documentation](https://github.com/UnivaultOffice/Docker-MailServer "UNIVAULTOFFICE Mail Server documentation").
 
-**STEP 6**: Install ONLYOFFICE Community Server
+**STEP 6**: Install UNIVAULTOFFICE Community Server
 
 ```bash
-sudo docker run --net onlyoffice -i -t -d --privileged --restart=always --name onlyoffice-community-server -p 80:80 -p 443:443 -p 5222:5222 --cgroupns=host \
+sudo docker run --net univaultoffice -i -t -d --privileged --restart=always --name univaultoffice-community-server -p 80:80 -p 443:443 -p 5222:5222 --cgroupns=host \
  -e MYSQL_SERVER_ROOT_PASSWORD=my-secret-pw \
- -e MYSQL_SERVER_DB_NAME=onlyoffice \
- -e MYSQL_SERVER_HOST=onlyoffice-mysql-server \
- -e MYSQL_SERVER_USER=onlyoffice_user \
- -e MYSQL_SERVER_PASS=onlyoffice_pass \
+ -e MYSQL_SERVER_DB_NAME=univaultoffice \
+ -e MYSQL_SERVER_HOST=univaultoffice-mysql-server \
+ -e MYSQL_SERVER_USER=univaultoffice_user \
+ -e MYSQL_SERVER_PASS=univaultoffice_pass \
  
- -e DOCUMENT_SERVER_PORT_80_TCP_ADDR=onlyoffice-document-server \
+ -e DOCUMENT_SERVER_PORT_80_TCP_ADDR=univaultoffice-document-server \
  -e DOCUMENT_SERVER_JWT_ENABLED=true \
  -e DOCUMENT_SERVER_JWT_SECRET=${JWT_SECRET} \
  -e DOCUMENT_SERVER_JWT_HEADER=AuthorizationJwt \
  
  -e MAIL_SERVER_API_HOST=${MAIL_SERVER_IP} \
- -e MAIL_SERVER_DB_HOST=onlyoffice-mysql-server \
- -e MAIL_SERVER_DB_NAME=onlyoffice_mailserver \
+ -e MAIL_SERVER_DB_HOST=univaultoffice-mysql-server \
+ -e MAIL_SERVER_DB_NAME=univaultoffice_mailserver \
  -e MAIL_SERVER_DB_PORT=3306 \
  -e MAIL_SERVER_DB_USER=root \
  -e MAIL_SERVER_DB_PASS=my-secret-pw \ 
  -e CONTROL_PANEL_PORT_80_TCP=80 \
- -e CONTROL_PANEL_PORT_80_TCP_ADDR=onlyoffice-control-panel \
- -v /app/onlyoffice/CommunityServer/data:/var/www/onlyoffice/Data \
- -v /app/onlyoffice/CommunityServer/logs:/var/log/onlyoffice \
- -v /app/onlyoffice/CommunityServer/letsencrypt:/etc/letsencrypt \
+ -e CONTROL_PANEL_PORT_80_TCP_ADDR=univaultoffice-control-panel \
+ -v /app/univaultoffice/CommunityServer/data:/var/www/univaultoffice/Data \
+ -v /app/univaultoffice/CommunityServer/logs:/var/log/univaultoffice \
+ -v /app/univaultoffice/CommunityServer/letsencrypt:/etc/letsencrypt \
  -v /sys/fs/cgroup:/sys/fs/cgroup:rw \
- onlyoffice/communityserver
+ univaultoffice/communityserver
 ```
 
-Where `${MAIL_SERVER_IP}` is the IP address for **ONLYOFFICE Mail Server**. You can easily get it using the command:
+Where `${MAIL_SERVER_IP}` is the IP address for **UNIVAULTOFFICE Mail Server**. You can easily get it using the command:
 ```
-MAIL_SERVER_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' onlyoffice-mail-server)
+MAIL_SERVER_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' univaultoffice-mail-server)
 ```
 
-Alternatively, you can use an automatic installation script to install ONLYOFFICE Workspace at once. For the mail server correct work you need to specify its hostname 'yourdomain.com'.
+Alternatively, you can use an automatic installation script to install UNIVAULTOFFICE Workspace at once. For the mail server correct work you need to specify its hostname 'yourdomain.com'.
 
-**STEP 1**: Download the ONLYOFFICE Workspace Docker script file
+**STEP 1**: Download the UNIVAULTOFFICE Workspace Docker script file
 
 ```bash
-wget https://download.onlyoffice.com/install/workspace-install.sh
+wget https://github.com/UnivaultOffice/DocumentServer/releases/latest/download/workspace-install.sh
 ```
 
-**STEP 2**: Install ONLYOFFICE Workspace executing the following command:
+**STEP 2**: Install UNIVAULTOFFICE Workspace executing the following command:
 
 ```bash
 workspace-install.sh -md yourdomain.com
 ```
 
-Or, use [docker-compose](https://docs.docker.com/compose/install "docker-compose"). First you need to clone this [GitHub repository](https://github.com/ONLYOFFICE/Docker-CommunityServer/):
+Or, use [docker-compose](https://docs.docker.com/compose/install "docker-compose"). First you need to clone this [GitHub repository](https://github.com/UnivaultOffice/Docker-CommunityServer/):
 
 ```bash
-wget https://raw.githubusercontent.com/ONLYOFFICE/Docker-CommunityServer/master/docker-compose.groups.yml
+wget https://raw.githubusercontent.com/UNIVAULTOFFICE/Docker-CommunityServer/master/docker-compose.groups.yml
 docker-compose up -d
 ```
 
-## ONLYOFFICE Document Server ipv6 setup
+## UNIVAULTOFFICE Document Server ipv6 setup
 
 (Works and is supported only for Linux hosts)
 
@@ -388,7 +388,7 @@ For more information, visit the official [Docker manual site](https://docs.docke
 
 As a relatively new project Docker is being worked on and actively developed by its community. So it's recommended to use the latest version of Docker, because the issues that you encounter might have already been fixed with a newer Docker release.
 
-The known Docker issue with ONLYOFFICE Document Server with rpm-based distributives is that sometimes the processes fail to start inside Docker container. Fedora and RHEL/CentOS users should try disabling SELinux with setenforce 0. If it fixes the issue then you can either stick with SELinux disabled which is not recommended by Red Hat, or switch to using Ubuntu.
+The known Docker issue with UNIVAULTOFFICE Document Server with rpm-based distributives is that sometimes the processes fail to start inside Docker container. Fedora and RHEL/CentOS users should try disabling SELinux with setenforce 0. If it fixes the issue then you can either stick with SELinux disabled which is not recommended by Red Hat, or switch to using Ubuntu.
 
 ### Document Server usage issues
 
@@ -402,23 +402,23 @@ Please note, that both executing the script and disconnecting users may take a l
 
 ## Project Information
 
-Official website: [www.onlyoffice.com](https://www.onlyoffice.com/?utm_source=github&utm_medium=cpc&utm_campaign=GitHubDockerDS)
+Official website: [www.univaultoffice.github.io](https://www.univaultoffice.github.io/?utm_source=github&utm_medium=cpc&utm_campaign=GitHubDockerDS)
 
-Code repository: [github.com/ONLYOFFICE/DocumentServer](https://github.com/ONLYOFFICE/DocumentServer "https://github.com/ONLYOFFICE/DocumentServer")
+Code repository: [github.com/UnivaultOffice/DocumentServer](https://github.com/UnivaultOffice/DocumentServer "https://github.com/UnivaultOffice/DocumentServer")
 
-Docker Image: [github.com/ONLYOFFICE/Docker-DocumentServer](https://github.com/ONLYOFFICE/Docker-DocumentServer "https://github.com/ONLYOFFICE/Docker-DocumentServer")
+Docker Image: [github.com/UnivaultOffice/Docker-DocumentServer](https://github.com/UnivaultOffice/Docker-DocumentServer "https://github.com/UnivaultOffice/Docker-DocumentServer")
 
 License: [GNU AGPL v3.0](https://onlyo.co/38YZGJh)
 
-Free version vs commercial builds comparison: https://github.com/ONLYOFFICE/DocumentServer#onlyoffice-docs-editions
+Free version vs commercial builds comparison: https://github.com/UnivaultOffice/DocumentServer#univaultoffice-docs-editions
 
 ## User Feedback and Support
 
-If you face any issues or have questions about this image, visit our official forum: [forum.onlyoffice.com][1].
+If you face any issues or have questions about this image, visit our official forum: [forum.univaultoffice.github.io][1].
 
-You are also welcome to ask and answer ONLYOFFICE development questions on [Stack Overflow][2], as well as share your suggestions on [feedback.onlyoffice.com](https://feedback.onlyoffice.com/forums/966080-your-voice-matters).
+You are also welcome to ask and answer UNIVAULTOFFICE development questions on [Stack Overflow][2], as well as share your suggestions on [feedback.univaultoffice.github.io](https://feedback.univaultoffice.github.io/forums/966080-your-voice-matters).
 
 Join [our Discord community](https://discord.gg/Hcgtf5n4uF) for connecting with fellow developers.
 
-  [1]: https://forum.onlyoffice.com
-  [2]: https://stackoverflow.com/questions/tagged/onlyoffice
+  [1]: https://forum.univaultoffice.github.io
+  [2]: https://stackoverflow.com/questions/tagged/univaultoffice

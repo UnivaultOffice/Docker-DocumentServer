@@ -1,19 +1,19 @@
 services:
-  onlyoffice-documentserver:
+  univaultoffice-documentserver:
     build:
       context: .
-    image: onlyoffice/documentserver #[-de,-ee]
-    container_name: onlyoffice-documentserver
+    image: univaultoffice/documentserver #[-de,-ee]
+    container_name: univaultoffice-documentserver
     depends_on:
-      - onlyoffice-postgresql
-      - onlyoffice-rabbitmq
+      - univaultoffice-postgresql
+      - univaultoffice-rabbitmq
     environment:
       - DB_TYPE=postgres
-      - DB_HOST=onlyoffice-postgresql
+      - DB_HOST=univaultoffice-postgresql
       - DB_PORT=5432
-      - DB_NAME=onlyoffice
-      - DB_USER=onlyoffice
-      - AMQP_URI=amqp://guest:guest@onlyoffice-rabbitmq
+      - DB_NAME=univaultoffice
+      - DB_USER=univaultoffice
+      - AMQP_URI=amqp://guest:guest@univaultoffice-rabbitmq
       # Uncomment strings below to enable the JSON Web Token validation.
       #- JWT_ENABLED=true
       #- JWT_SECRET=secret
@@ -32,14 +32,14 @@ services:
     restart: always
     stop_grace_period: 60s
     volumes:
-       - /var/www/onlyoffice/Data
-       - /var/log/onlyoffice
-       - /var/lib/onlyoffice/documentserver/App_Data/cache/files
-       - /var/www/onlyoffice/documentserver-example/public/files
+       - /var/www/univaultoffice/Data
+       - /var/log/univaultoffice
+       - /var/lib/univaultoffice/documentserver/App_Data/cache/files
+       - /var/www/univaultoffice/documentserver-example/public/files
        - /usr/share/fonts
        
-  onlyoffice-rabbitmq:
-    container_name: onlyoffice-rabbitmq
+  univaultoffice-rabbitmq:
+    container_name: univaultoffice-rabbitmq
     image: rabbitmq:3
     restart: always
     expose:
@@ -51,12 +51,12 @@ services:
       start_period: 10s
       timeout: 10s
 
-  onlyoffice-postgresql:
-    container_name: onlyoffice-postgresql
+  univaultoffice-postgresql:
+    container_name: univaultoffice-postgresql
     image: postgres:15
     environment:
-      - POSTGRES_DB=onlyoffice
-      - POSTGRES_USER=onlyoffice
+      - POSTGRES_DB=univaultoffice
+      - POSTGRES_USER=univaultoffice
       - POSTGRES_HOST_AUTH_METHOD=trust
     restart: always
     expose:
@@ -64,7 +64,7 @@ services:
     volumes:
       - postgresql_data:/var/lib/postgresql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U onlyoffice"]
+      test: ["CMD-SHELL", "pg_isready -U univaultoffice"]
       interval: 10s
       retries: 3
       start_period: 10s

@@ -1,33 +1,33 @@
 version: '2.1'
 services:
-  onlyoffice-documentserver:
-    container_name: onlyoffice-documentserver
+  univaultoffice-documentserver:
+    container_name: univaultoffice-documentserver
     build:
       context: ../../.
       dockerfile: Dockerfile
     depends_on:
-      - onlyoffice-oracle
+      - univaultoffice-oracle
     environment:
       - DB_TYPE=${DB_TYPE:-oracle}
-      - DB_HOST=${DB_HOST:-onlyoffice-oracle}
+      - DB_HOST=${DB_HOST:-univaultoffice-oracle}
       - DB_PORT=${DB_PORT:-1521}
       - DB_NAME=${DB_NAME:-xepdb1}
-      - DB_USER=${DB_USER:-onlyoffice}
-      - DB_PWD=${DB_PWD:-onlyoffice}
+      - DB_USER=${DB_USER:-univaultoffice}
+      - DB_PWD=${DB_PWD:-univaultoffice}
     stdin_open: true
     restart: always
     ports:
       - '80:80'
 
-  onlyoffice-oracle:
-    container_name: onlyoffice-oracle
+  univaultoffice-oracle:
+    container_name: univaultoffice-oracle
     build:
       context: .
       dockerfile: oracle.Dockerfile
       args:
         - ORACLE_DATABASE=${DB_NAME:-xepdb1}
-        - ORACLE_USER=${DB_USER:-onlyoffice}
-        - ORACLE_PASSWORD=${DB_PWD:-onlyoffice}
+        - ORACLE_USER=${DB_USER:-univaultoffice}
+        - ORACLE_PASSWORD=${DB_PWD:-univaultoffice}
     restart: always
     volumes:
       - oracle_data:/opt/oracle/oradata

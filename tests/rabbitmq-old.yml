@@ -1,29 +1,29 @@
 version: '2.1'
 services:
-  onlyoffice-documentserver:
-    container_name: onlyoffice-documentserver
+  univaultoffice-documentserver:
+    container_name: univaultoffice-documentserver
     build:
       context: ../.
     environment:
       - AMQP_SERVER_TYPE=${AMQP_SERVER_TYPE:-rabbitmq}
-      - AMQP_SERVER_URL=${AMQP_SERVER_URL:-amqp://guest:guest@onlyoffice-rabbitmq}
+      - AMQP_SERVER_URL=${AMQP_SERVER_URL:-amqp://guest:guest@univaultoffice-rabbitmq}
     stdin_open: true
     restart: always
     ports:
       - '80:80'
       - '443:443'
     networks:
-      - onlyoffice
+      - univaultoffice
 
-  onlyoffice-rabbitmq:
-    container_name: onlyoffice-rabbitmq
+  univaultoffice-rabbitmq:
+    container_name: univaultoffice-rabbitmq
     image: rabbitmq
     restart: always
     networks:
-     - onlyoffice
+     - univaultoffice
     expose:
       - '5672'
 
 networks:
-  onlyoffice:
+  univaultoffice:
     driver: 'bridge'

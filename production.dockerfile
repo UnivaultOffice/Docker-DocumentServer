@@ -1,6 +1,6 @@
 ### Arguments avavlivable only for FROM instruction ### 
 ARG PULL_TAG=latest
-ARG COMPANY_NAME=onlyoffice
+ARG COMPANY_NAME=univaultoffice
 ARG PRODUCT_EDITION=
 ### Rebuild arguments
 ARG UCS_PREFIX=
@@ -20,7 +20,7 @@ RUN    echo "This is rebuild" \
  
 FROM ${COMPANY_NAME}/documentserver${PRODUCT_EDITION}:${PULL_TAG} as documentserver-nonexample
 
-ARG COMPANY_NAME=onlyoffice
+ARG COMPANY_NAME=univaultoffice
 ARG PRODUCT_NAME=documentserver
 ARG DS_SUPERVISOR_CONF=/etc/supervisor/conf.d/ds.conf
 

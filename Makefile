@@ -1,17 +1,17 @@
-COMPANY_NAME ?= ONLYOFFICE
+COMPANY_NAME ?= UNIVAULTOFFICE
 GIT_BRANCH ?= develop
 PRODUCT_NAME ?= documentserver
 PRODUCT_EDITION ?= 
 PRODUCT_VERSION ?= 0.0.0
 BUILD_NUMBER ?= 0
 BUILD_CHANNEL ?= nightly
-ONLYOFFICE_VALUE ?= onlyoffice
+UNIVAULTOFFICE_VALUE ?= univaultoffice
 
 COMPANY_NAME_LOW = $(shell echo $(COMPANY_NAME) | tr A-Z a-z)
 
 PACKAGE_NAME := $(COMPANY_NAME_LOW)-$(PRODUCT_NAME)$(PRODUCT_EDITION)
 PACKAGE_VERSION ?= $(PRODUCT_VERSION)-$(BUILD_NUMBER)~stretch
-PACKAGE_BASEURL ?= https://s3.eu-west-1.amazonaws.com/repo-doc-onlyoffice-com/server/linux/debian
+PACKAGE_BASEURL ?= https://s3.eu-west-1.amazonaws.com/repo-doc-univaultoffice-com/server/linux/debian
 
 ifeq ($(BUILD_CHANNEL),$(filter $(BUILD_CHANNEL),nightly test))
 	DOCKER_TAG := $(PRODUCT_VERSION).$(BUILD_NUMBER)
@@ -35,7 +35,7 @@ $(DOCKER_DUMMY):
 		--build-arg PACKAGE_VERSION=$(PACKAGE_VERSION) \
 		--build-arg PACKAGE_BASEURL=$(PACKAGE_BASEURL) \
 		--build-arg TARGETARCH=amd64 \
-		--build-arg ONLYOFFICE_VALUE=$(ONLYOFFICE_VALUE) \
+		--build-arg UNIVAULTOFFICE_VALUE=$(UNIVAULTOFFICE_VALUE) \
 		-t $(DOCKER_IMAGE):$(DOCKER_TAG) . && \
 	mkdir -p $$(dirname $@) && \
 	echo "Done" > $@

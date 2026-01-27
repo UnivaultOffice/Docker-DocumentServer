@@ -5,26 +5,26 @@ services:
     build:
       context: ../.
     depends_on:
-      - onlyoffice-mariadb
+      - univaultoffice-mariadb
     environment:
       - DB_TYPE=${DB_TYPE:-mysql}
-      - DB_HOST=${DB_HOST:-onlyoffice-mariadb}
+      - DB_HOST=${DB_HOST:-univaultoffice-mariadb}
       - DB_PORT=${DB_PORT:-3306}
-      - DB_NAME=${DB_NAME:-onlyoffice}
-      - DB_USER=${DB_USER:-onlyoffice}
-      - DB_PWD=${DB_PWD:-onlyoffice}
+      - DB_NAME=${DB_NAME:-univaultoffice}
+      - DB_USER=${DB_USER:-univaultoffice}
+      - DB_PWD=${DB_PWD:-univaultoffice}
     stdin_open: true
     restart: always
     ports:
       - '80:80'
 
-  onlyoffice-mariadb:
-    container_name: onlyoffice-mariadb
+  univaultoffice-mariadb:
+    container_name: univaultoffice-mariadb
     image: mariadb:${MARIADB_VERSION:-10.5}
     environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE:-onlyoffice}
-      - MYSQL_USER=${MYSQL_USER:-onlyoffice}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-onlyoffice}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-univaultoffice}
+      - MYSQL_USER=${MYSQL_USER:-univaultoffice}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-univaultoffice}
       - MYSQL_ALLOW_EMPTY_PASSWORD=${MYSQL_ALLOW_EMPTY_PASSWORD:-yes}
     restart: always
     volumes:

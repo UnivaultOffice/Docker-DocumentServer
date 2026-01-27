@@ -1,33 +1,33 @@
 version: '2.1'
 services:
-  onlyoffice-documentserver:
-    container_name: onlyoffice-documentserver
+  univaultoffice-documentserver:
+    container_name: univaultoffice-documentserver
     build:
       context: ../../.
       dockerfile: Dockerfile
     depends_on:
-      - onlyoffice-mssql
+      - univaultoffice-mssql
     environment:
       - DB_TYPE=${DB_TYPE:-mssql}
-      - DB_HOST=${DB_HOST:-onlyoffice-mssql}
+      - DB_HOST=${DB_HOST:-univaultoffice-mssql}
       - DB_PORT=${DB_PORT:-1433}
-      - DB_NAME=${DB_NAME:-onlyoffice}
-      - DB_USER=${DB_USER:-onlyoffice}
-      - DB_PWD=${DB_PWD:-onlyoffice}
+      - DB_NAME=${DB_NAME:-univaultoffice}
+      - DB_USER=${DB_USER:-univaultoffice}
+      - DB_PWD=${DB_PWD:-univaultoffice}
     stdin_open: true
     restart: always
     ports:
       - '80:80'
 
-  onlyoffice-mssql:
-    container_name: onlyoffice-mssql
+  univaultoffice-mssql:
+    container_name: univaultoffice-mssql
     build:
       context: .
       dockerfile: mssql.Dockerfile
       args:
-        - MSSQL_DATABASE=${DB_NAME:-onlyoffice}
-        - MSSQL_USER=${DB_USER:-onlyoffice}
-        - MSSQL_PASSWORD=${DB_PWD:-onlyoffice}
+        - MSSQL_DATABASE=${DB_NAME:-univaultoffice}
+        - MSSQL_USER=${DB_USER:-univaultoffice}
+        - MSSQL_PASSWORD=${DB_PWD:-univaultoffice}
     restart: always
     volumes:
       - mssql_data:/var/opt/mssql

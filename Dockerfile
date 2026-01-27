@@ -3,7 +3,7 @@ ARG BASE_VERSION=24.04
 ARG BASE_IMAGE=ubuntu:$BASE_VERSION
 
 FROM ${BASE_IMAGE} AS documentserver
-LABEL maintainer Ascensio System SIA <support@onlyoffice.com>
+LABEL maintainer Univault Technologies <support@univaultoffice.github.io>
 
 ARG BASE_VERSION
 ARG PG_VERSION=16
@@ -21,7 +21,7 @@ ENV OC_DOWNLOAD_URL=https://download.oracle.com/otn_software/linux/instantclient
 
 ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive PG_VERSION=${PG_VERSION} BASE_VERSION=${BASE_VERSION}
 
-ARG ONLYOFFICE_VALUE=onlyoffice
+ARG UNIVAULTOFFICE_VALUE=univaultoffice
 COPY fonts/ /usr/share/fonts/truetype/
 
 RUN echo "#!/bin/sh\nexit 0" > /usr/sbin/policy-rc.d && \
@@ -82,8 +82,8 @@ RUN echo "#!/bin/sh\nexit 0" > /usr/sbin/policy-rc.d && \
     sed 's|\(application\/zip.*\)|\1\n    application\/wasm wasm;|' -i /etc/nginx/mime.types && \
     pg_conftool $PG_VERSION main set listen_addresses 'localhost' && \
     service postgresql restart && \
-    sudo -u postgres psql -c "CREATE USER $ONLYOFFICE_VALUE WITH password '$ONLYOFFICE_VALUE';" && \
-    sudo -u postgres psql -c "CREATE DATABASE $ONLYOFFICE_VALUE OWNER $ONLYOFFICE_VALUE;" && \
+    sudo -u postgres psql -c "CREATE USER $UNIVAULTOFFICE_VALUE WITH password '$UNIVAULTOFFICE_VALUE';" && \
+    sudo -u postgres psql -c "CREATE DATABASE $UNIVAULTOFFICE_VALUE OWNER $UNIVAULTOFFICE_VALUE;" && \
     wget -O basic.zip ${OC_DOWNLOAD_URL}/instantclient-basic-linux.$(dpkg --print-architecture | sed 's/amd64/x64/')-${OC_FILE_SUFFIX}.zip && \
     wget -O sqlplus.zip ${OC_DOWNLOAD_URL}/instantclient-sqlplus-linux.$(dpkg --print-architecture | sed 's/amd64/x64/')-${OC_FILE_SUFFIX}.zip && \
     unzip -o basic.zip -d /usr/share && \
@@ -104,12 +104,12 @@ COPY oracle/sqlplus /usr/bin/sqlplus
 
 EXPOSE 80 443
 
-ARG COMPANY_NAME=onlyoffice
+ARG COMPANY_NAME=univaultoffice
 ARG PRODUCT_NAME=documentserver
 ARG PRODUCT_EDITION=
 ARG PACKAGE_VERSION=
 ARG TARGETARCH
-ARG PACKAGE_BASEURL="http://download.onlyoffice.com/install/documentserver/linux"
+ARG PACKAGE_BASEURL="https://github.com/UnivaultOffice/DocumentServer/releases/latest/download"
 
 ENV COMPANY_NAME=$COMPANY_NAME \
     PRODUCT_NAME=$PRODUCT_NAME \
@@ -122,8 +122,8 @@ RUN PACKAGE_FILE="${COMPANY_NAME}-${PRODUCT_NAME}${PRODUCT_EDITION}${PACKAGE_VER
     apt-get -y update && \
     service postgresql start && \
     apt-get -yq install /tmp/$PACKAGE_FILE && \
-    PGPASSWORD=$ONLYOFFICE_VALUE dropdb -h localhost -p 5432 -U $ONLYOFFICE_VALUE $ONLYOFFICE_VALUE && \
-    sudo -u postgres psql -c "DROP ROLE onlyoffice;" && \
+    PGPASSWORD=$UNIVAULTOFFICE_VALUE dropdb -h localhost -p 5432 -U $UNIVAULTOFFICE_VALUE $UNIVAULTOFFICE_VALUE && \
+    sudo -u postgres psql -c "DROP ROLE univaultoffice;" && \
     service postgresql stop && \
     chmod 755 /etc/init.d/supervisor && \
     sed "s/COMPANY_NAME/${COMPANY_NAME}/g" -i /etc/supervisor/conf.d/*.conf && \

@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/mssql/server:2022-latest as onlyoffice-mssql
+FROM mcr.microsoft.com/mssql/server:2022-latest as univaultoffice-mssql
 
 ENV ACCEPT_EULA=Y
 

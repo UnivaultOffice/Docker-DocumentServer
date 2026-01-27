@@ -1,32 +1,32 @@
 version: '2.1'
 services:
-  onlyoffice-documentserver:
-    container_name: onlyoffice-documentserver
+  univaultoffice-documentserver:
+    container_name: univaultoffice-documentserver
     build:
       context: ../.
     environment:
       - AMQP_TYPE=${AMQP_TYPE:-activemq}
-      - AMQP_URI=${AMQP_URI:-amqp://guest:guest@onlyoffice-activemq}
+      - AMQP_URI=${AMQP_URI:-amqp://guest:guest@univaultoffice-activemq}
     stdin_open: true
     restart: always
     ports:
       - '80:80'
       - '443:443'
     networks:
-      - onlyoffice
+      - univaultoffice
 
-  onlyoffice-activemq:
-    container_name: onlyoffice-activemq
+  univaultoffice-activemq:
+    container_name: univaultoffice-activemq
     image: webcenter/activemq:${ACTIVEMQ_VERSION:-5.14.3}
     environment:
       - ACTIVEMQ_USERS_guest=${ACTIVEMQ_USERS_guest:-guest}
       - ACTIVEMQ_GROUPS_owners=${ACTIVEMQ_GROUPS_owners:-guest}
     restart: always
     networks:
-     - onlyoffice
+     - univaultoffice
     expose:
       - '5672'
 
 networks:
-  onlyoffice:
+  univaultoffice:
     driver: 'bridge'

@@ -1,4 +1,4 @@
-FROM container-registry.oracle.com/database/express:21.3.0-xe as onlyoffice-oracle
+FROM container-registry.oracle.com/database/express:21.3.0-xe as univaultoffice-oracle
 
 ARG ORACLE_DATABASE=
 ARG ORACLE_PASSWORD=

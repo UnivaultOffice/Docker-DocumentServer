@@ -1,13 +1,13 @@
 version: '2.1'
 services:
-  onlyoffice-documentserver:
-    container_name: onlyoffice-documentserver
+  univaultoffice-documentserver:
+    container_name: univaultoffice-documentserver
     build:
       context: ../.
       args:
         - PRODUCT_NAME=${PRODUCT_NAME:-documentserver}
     environment:
-      - REDIS_SERVER_HOST=${REDIS_SERVER_HOST:-onlyoffice-redis}
+      - REDIS_SERVER_HOST=${REDIS_SERVER_HOST:-univaultoffice-redis}
       - REDIS_SERVER_PORT=${REDIS_SERVER_PORT:-6379}
     stdin_open: true
     restart: always
@@ -15,17 +15,17 @@ services:
       - '80:80'
       - '443:443'
     networks:
-      - onlyoffice
+      - univaultoffice
 
-  onlyoffice-redis:
-    container_name: onlyoffice-redis
+  univaultoffice-redis:
+    container_name: univaultoffice-redis
     image: redis:${REDIS_VERSION:-latest}
     restart: always
     networks:
-     - onlyoffice
+     - univaultoffice
     expose:
       - '6379'
 
 networks:
-  onlyoffice:
+  univaultoffice:
     driver: 'bridge'

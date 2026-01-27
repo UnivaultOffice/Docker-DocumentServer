@@ -1,11 +1,11 @@
 version: '2.1'
 services:
-  onlyoffice-documentserver:
-    container_name: onlyoffice-documentserver
+  univaultoffice-documentserver:
+    container_name: univaultoffice-documentserver
     build:
       context: ../.
     depends_on:
-      - onlyoffice-graphite
+      - univaultoffice-graphite
     environment:
       - METRICS_ENABLED=${METRICS_ENABLED:-true}
       - METRICS_HOST=${METRICS_HOST:-localhost}
@@ -18,13 +18,13 @@ services:
     ports:
       - '80:80'
     volumes:
-      - ./graphite/statsd:/var/www/onlyoffice/documentserver/server/Metrics/config
+      - ./graphite/statsd:/var/www/univaultoffice/documentserver/server/Metrics/config
 
-  onlyoffice-graphite:
-    container_name: onlyoffice-graphite
+  univaultoffice-graphite:
+    container_name: univaultoffice-graphite
     image: graphiteapp/graphite-statsd
     environment:
-      - GRAPHITE_STATSD_HOST=${GRAPHITE_STATSD_HOST:-onlyoffice-documentserver}
+      - GRAPHITE_STATSD_HOST=${GRAPHITE_STATSD_HOST:-univaultoffice-documentserver}
       - GRAPHITE_TIME_ZONE=${GRAPHITE_TIME_ZONE:-Etc/UTC}
     ports:
       - '8888:80'

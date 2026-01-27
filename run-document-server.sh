@@ -9,8 +9,8 @@ start_process() {
 
 function clean_exit {
   [[ -z "$CHILD" ]] || kill -s SIGTERM "$CHILD" 2>/dev/null
-  if [ ${ONLYOFFICE_DATA_CONTAINER} == "false" ] && \
-  [ ${ONLYOFFICE_DATA_CONTAINER_HOST} == "localhost" ]; then
+  if [ ${UNIVAULTOFFICE_DATA_CONTAINER} == "false" ] && \
+  [ ${UNIVAULTOFFICE_DATA_CONTAINER_HOST} == "localhost" ]; then
     /usr/bin/documentserver-prepare4shutdown.sh
   fi
   exit
@@ -34,9 +34,9 @@ SUPERVISOR_CONF_DIR="/etc/supervisor/conf.d"
 IS_UPGRADE="false"
 PLUGINS_ENABLED=${PLUGINS_ENABLED:-true}
 
-ONLYOFFICE_DATA_CONTAINER=${ONLYOFFICE_DATA_CONTAINER:-false}
-ONLYOFFICE_DATA_CONTAINER_HOST=${ONLYOFFICE_DATA_CONTAINER_HOST:-localhost}
-ONLYOFFICE_DATA_CONTAINER_PORT=80
+UNIVAULTOFFICE_DATA_CONTAINER=${UNIVAULTOFFICE_DATA_CONTAINER:-false}
+UNIVAULTOFFICE_DATA_CONTAINER_HOST=${UNIVAULTOFFICE_DATA_CONTAINER_HOST:-localhost}
+UNIVAULTOFFICE_DATA_CONTAINER_PORT=80
 
 RELEASE_DATE="$(stat -c="%y" ${APP_DIR}/server/DocService/docservice | sed -r 's/=([0-9]+)-([0-9]+)-([0-9]+) ([0-9:.+ ]+)/\1-\2-\3/')";
 if [ -f ${DS_RELEASE_DATE} ]; then
@@ -46,7 +46,7 @@ else
 fi
 
 if [ "${RELEASE_DATE}" != "${PREV_RELEASE_DATE}" ]; then
-  if [ ${ONLYOFFICE_DATA_CONTAINER} != "true" ]; then
+  if [ ${UNIVAULTOFFICE_DATA_CONTAINER} != "true" ]; then
     IS_UPGRADE="true";
   fi
 fi
@@ -91,15 +91,15 @@ CA_CERTIFICATES_PATH=${CA_CERTIFICATES_PATH:-${SSL_CERTIFICATES_DIR}/ca-certific
 SSL_DHPARAM_PATH=${SSL_DHPARAM_PATH:-${SSL_CERTIFICATES_DIR}/dhparam.pem}
 SSL_VERIFY_CLIENT=${SSL_VERIFY_CLIENT:-off}
 USE_UNAUTHORIZED_STORAGE=${USE_UNAUTHORIZED_STORAGE:-false}
-ONLYOFFICE_HTTPS_HSTS_ENABLED=${ONLYOFFICE_HTTPS_HSTS_ENABLED:-true}
-ONLYOFFICE_HTTPS_HSTS_MAXAGE=${ONLYOFFICE_HTTPS_HSTS_MAXAGE:-31536000}
+UNIVAULTOFFICE_HTTPS_HSTS_ENABLED=${UNIVAULTOFFICE_HTTPS_HSTS_ENABLED:-true}
+UNIVAULTOFFICE_HTTPS_HSTS_MAXAGE=${UNIVAULTOFFICE_HTTPS_HSTS_MAXAGE:-31536000}
 SYSCONF_TEMPLATES_DIR="/app/ds/setup/config"
 
 NGINX_CONFD_PATH="/etc/nginx/conf.d";
-NGINX_ONLYOFFICE_PATH="${CONF_DIR}/nginx"
-NGINX_ONLYOFFICE_CONF="${NGINX_ONLYOFFICE_PATH}/ds.conf"
-NGINX_ONLYOFFICE_EXAMPLE_PATH="${CONF_DIR}-example/nginx"
-NGINX_ONLYOFFICE_EXAMPLE_CONF="${NGINX_ONLYOFFICE_EXAMPLE_PATH}/includes/ds-example.conf"
+NGINX_UNIVAULTOFFICE_PATH="${CONF_DIR}/nginx"
+NGINX_UNIVAULTOFFICE_CONF="${NGINX_UNIVAULTOFFICE_PATH}/ds.conf"
+NGINX_UNIVAULTOFFICE_EXAMPLE_PATH="${CONF_DIR}-example/nginx"
+NGINX_UNIVAULTOFFICE_EXAMPLE_CONF="${NGINX_UNIVAULTOFFICE_EXAMPLE_PATH}/includes/ds-example.conf"
 
 NGINX_CONFIG_PATH="/etc/nginx/nginx.conf"
 NGINX_WORKER_PROCESSES=${NGINX_WORKER_PROCESSES:-1}
@@ -136,14 +136,14 @@ else
   REDIS_ENABLED=true
 fi
 
-ONLYOFFICE_DEFAULT_CONFIG=${CONF_DIR}/local.json
-ONLYOFFICE_LOG4JS_CONFIG=${CONF_DIR}/log4js/production.json
-ONLYOFFICE_EXAMPLE_CONFIG=${CONF_DIR}-example/local.json
+UNIVAULTOFFICE_DEFAULT_CONFIG=${CONF_DIR}/local.json
+UNIVAULTOFFICE_LOG4JS_CONFIG=${CONF_DIR}/log4js/production.json
+UNIVAULTOFFICE_EXAMPLE_CONFIG=${CONF_DIR}-example/local.json
 
 JSON_BIN=${APP_DIR}/npm/json
-JSON="${JSON_BIN} -q -f ${ONLYOFFICE_DEFAULT_CONFIG}"
-JSON_LOG="${JSON_BIN} -q -f ${ONLYOFFICE_LOG4JS_CONFIG}"
-JSON_EXAMPLE="${JSON_BIN} -q -f ${ONLYOFFICE_EXAMPLE_CONFIG}"
+JSON="${JSON_BIN} -q -f ${UNIVAULTOFFICE_DEFAULT_CONFIG}"
+JSON_LOG="${JSON_BIN} -q -f ${UNIVAULTOFFICE_LOG4JS_CONFIG}"
+JSON_EXAMPLE="${JSON_BIN} -q -f ${UNIVAULTOFFICE_EXAMPLE_CONFIG}"
 
 LOCAL_SERVICES=()
 
@@ -305,7 +305,7 @@ waiting_for_redis(){
   waiting_for_connection ${REDIS_SERVER_HOST} ${REDIS_SERVER_PORT}
 }
 waiting_for_datacontainer(){
-  waiting_for_connection ${ONLYOFFICE_DATA_CONTAINER_HOST} ${ONLYOFFICE_DATA_CONTAINER_PORT}
+  waiting_for_connection ${UNIVAULTOFFICE_DATA_CONTAINER_HOST} ${UNIVAULTOFFICE_DATA_CONTAINER_PORT}
 }
 
 update_statsd_settings(){
@@ -398,7 +398,7 @@ update_ds_settings(){
   ${JSON} -I -e "this.services.CoAuthoring.token.inbox.inBody = ${JWT_IN_BODY}"
   ${JSON} -I -e "this.services.CoAuthoring.token.outbox.inBody = ${JWT_IN_BODY}"
 
-  if [ -f "${ONLYOFFICE_EXAMPLE_CONFIG}" ]; then
+  if [ -f "${UNIVAULTOFFICE_EXAMPLE_CONFIG}" ]; then
     ${JSON_EXAMPLE} -I -e "this.server.token.enable = ${JWT_ENABLED}"
     ${JSON_EXAMPLE} -I -e "this.server.token.secret = '${JWT_SECRET}'"
     ${JSON_EXAMPLE} -I -e "this.server.token.authorizationHeader = '${JWT_HEADER}'"
@@ -608,51 +608,51 @@ update_nginx_settings(){
 
   if [ "${NGINX_ACCESS_LOG}" = "true" ]; then
     touch "${DS_LOG_DIR}/nginx.access.log"
-    sed -ri 's|^\s*access_log\b.*;|access_log '"${DS_LOG_DIR}"'/nginx.access.log;|' "${NGINX_CONFIG_PATH}" "${NGINX_ONLYOFFICE_PATH}/includes/ds-common.conf" 2>/dev/null
+    sed -ri 's|^\s*access_log\b.*;|access_log '"${DS_LOG_DIR}"'/nginx.access.log;|' "${NGINX_CONFIG_PATH}" "${NGINX_UNIVAULTOFFICE_PATH}/includes/ds-common.conf" 2>/dev/null
   else
     sed -ri 's|^\s*access_log\b.*;|access_log off;|' "${NGINX_CONFIG_PATH}"
   fi
 
   # setup HTTPS
   if [ -f "${SSL_CERTIFICATE_PATH}" -a -f "${SSL_KEY_PATH}" ]; then
-    cp -f ${NGINX_ONLYOFFICE_PATH}/ds-ssl.conf.tmpl ${NGINX_ONLYOFFICE_CONF}
+    cp -f ${NGINX_UNIVAULTOFFICE_PATH}/ds-ssl.conf.tmpl ${NGINX_UNIVAULTOFFICE_CONF}
 
     # configure nginx
-    sed 's,{{SSL_CERTIFICATE_PATH}},'"${SSL_CERTIFICATE_PATH}"',' -i ${NGINX_ONLYOFFICE_CONF}
-    sed 's,{{SSL_KEY_PATH}},'"${SSL_KEY_PATH}"',' -i ${NGINX_ONLYOFFICE_CONF}
+    sed 's,{{SSL_CERTIFICATE_PATH}},'"${SSL_CERTIFICATE_PATH}"',' -i ${NGINX_UNIVAULTOFFICE_CONF}
+    sed 's,{{SSL_KEY_PATH}},'"${SSL_KEY_PATH}"',' -i ${NGINX_UNIVAULTOFFICE_CONF}
 
     # turn on http2
-    sed 's,\(443 ssl\),\1 http2,' -i ${NGINX_ONLYOFFICE_CONF}
+    sed 's,\(443 ssl\),\1 http2,' -i ${NGINX_UNIVAULTOFFICE_CONF}
 
     # if dhparam path is valid, add to the config, otherwise remove the option
     if [ -r "${SSL_DHPARAM_PATH}" ]; then
-      sed 's,\(\#* *\)\?\(ssl_dhparam \).*\(;\)$,'"\2${SSL_DHPARAM_PATH}\3"',' -i ${NGINX_ONLYOFFICE_CONF}
+      sed 's,\(\#* *\)\?\(ssl_dhparam \).*\(;\)$,'"\2${SSL_DHPARAM_PATH}\3"',' -i ${NGINX_UNIVAULTOFFICE_CONF}
     else
-      sed '/ssl_dhparam/d' -i ${NGINX_ONLYOFFICE_CONF}
+      sed '/ssl_dhparam/d' -i ${NGINX_UNIVAULTOFFICE_CONF}
     fi
 
-    sed 's,\(ssl_verify_client \).*\(;\)$,'"\1${SSL_VERIFY_CLIENT}\2"',' -i ${NGINX_ONLYOFFICE_CONF}
+    sed 's,\(ssl_verify_client \).*\(;\)$,'"\1${SSL_VERIFY_CLIENT}\2"',' -i ${NGINX_UNIVAULTOFFICE_CONF}
 
     if [ -f "${CA_CERTIFICATES_PATH}" ]; then
-      sed '/ssl_verify_client/a '"ssl_client_certificate ${CA_CERTIFICATES_PATH}"';' -i ${NGINX_ONLYOFFICE_CONF}
+      sed '/ssl_verify_client/a '"ssl_client_certificate ${CA_CERTIFICATES_PATH}"';' -i ${NGINX_UNIVAULTOFFICE_CONF}
     fi
 
-    if [ "${ONLYOFFICE_HTTPS_HSTS_ENABLED}" == "true" ]; then
-      sed 's,\(max-age=\).*\(;\)$,'"\1${ONLYOFFICE_HTTPS_HSTS_MAXAGE}\2"',' -i ${NGINX_ONLYOFFICE_CONF}
+    if [ "${UNIVAULTOFFICE_HTTPS_HSTS_ENABLED}" == "true" ]; then
+      sed 's,\(max-age=\).*\(;\)$,'"\1${UNIVAULTOFFICE_HTTPS_HSTS_MAXAGE}\2"',' -i ${NGINX_UNIVAULTOFFICE_CONF}
     else
-      sed '/max-age=/d' -i ${NGINX_ONLYOFFICE_CONF}
+      sed '/max-age=/d' -i ${NGINX_UNIVAULTOFFICE_CONF}
     fi
   else
-    ln -sf ${NGINX_ONLYOFFICE_PATH}/ds.conf.tmpl ${NGINX_ONLYOFFICE_CONF}
+    ln -sf ${NGINX_UNIVAULTOFFICE_PATH}/ds.conf.tmpl ${NGINX_UNIVAULTOFFICE_CONF}
   fi
 
   # check if ipv6 supported otherwise remove it from nginx config
   if [ ! -f /proc/net/if_inet6 ]; then
-    sed '/listen\s\+\[::[0-9]*\].\+/d' -i $NGINX_ONLYOFFICE_CONF
+    sed '/listen\s\+\[::[0-9]*\].\+/d' -i $NGINX_UNIVAULTOFFICE_CONF
   fi
 
-  if [ -f "${NGINX_ONLYOFFICE_EXAMPLE_CONF}" ]; then
-    sed 's/linux/docker/' -i ${NGINX_ONLYOFFICE_EXAMPLE_CONF}
+  if [ -f "${NGINX_UNIVAULTOFFICE_EXAMPLE_CONF}" ]; then
+    sed 's/linux/docker/' -i ${NGINX_UNIVAULTOFFICE_EXAMPLE_CONF}
   fi
 
   start_process documentserver-update-securelink.sh -s ${SECURE_LINK_SECRET:-$(pwgen -s 20)} -r false
@@ -694,7 +694,7 @@ done
 AI_CONFIG_FILE="${DATA_DIR}/runtime.json"
 [ -f "${AI_CONFIG_FILE}" ] && { chown ds:ds "${AI_CONFIG_FILE}" && chmod 644 "${AI_CONFIG_FILE}"; }
 
-if [ ${ONLYOFFICE_DATA_CONTAINER_HOST} = "localhost" ]; then
+if [ ${UNIVAULTOFFICE_DATA_CONTAINER_HOST} = "localhost" ]; then
 
   read_setting
 
@@ -778,7 +778,7 @@ if [ ${PG_NEW_CLUSTER} = "true" ] || [ "${PG_DB_EXISTS}" != "1" ]; then
   create_postgresql_tbl
 fi
 
-if [ ${ONLYOFFICE_DATA_CONTAINER} != "true" ]; then
+if [ ${UNIVAULTOFFICE_DATA_CONTAINER} != "true" ]; then
   waiting_for_db
   waiting_for_amqp
   if [ ${REDIS_ENABLED} = "true" ]; then
@@ -820,10 +820,10 @@ fi
 
 # Regenerate the fonts list and the fonts thumbnails
 if [ "${GENERATE_FONTS}" == "true" ]; then
-  start_process documentserver-generate-allfonts.sh ${ONLYOFFICE_DATA_CONTAINER}
+  start_process documentserver-generate-allfonts.sh ${UNIVAULTOFFICE_DATA_CONTAINER}
 fi
 
-start_process documentserver-static-gzip.sh ${ONLYOFFICE_DATA_CONTAINER}
+start_process documentserver-static-gzip.sh ${UNIVAULTOFFICE_DATA_CONTAINER}
 
 echo "${JWT_MESSAGE}" 
 

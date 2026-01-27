@@ -1,21 +1,21 @@
 version: '2'
 services:
-  onlyoffice-documentserver:
+  univaultoffice-documentserver:
     build:
       context: ../../.
       dockerfile: Dockerfile
       target: documentserver
-    container_name: onlyoffice-documentserver
+    container_name: univaultoffice-documentserver
     depends_on:
-      - onlyoffice-dameng
-      - onlyoffice-rabbitmq
+      - univaultoffice-dameng
+      - univaultoffice-rabbitmq
     environment:
       - DB_TYPE=dameng
-      - DB_HOST=onlyoffice-dameng
+      - DB_HOST=univaultoffice-dameng
       - DB_PORT=5236
-      - DB_NAME=onlyoffice
-      - DB_USER=onlyoffice
-      - AMQP_URI=amqp://guest:guest@onlyoffice-rabbitmq
+      - DB_NAME=univaultoffice
+      - DB_USER=univaultoffice
+      - AMQP_URI=amqp://guest:guest@univaultoffice-rabbitmq
       # Costomize the JSON Web Token validation parameters if needed.
       #- JWT_ENABLED=false
       #- JWT_SECRET=secret
@@ -28,21 +28,21 @@ services:
     restart: always
     stop_grace_period: 60s
     volumes:
-       - /var/www/onlyoffice/Data
-       - /var/log/onlyoffice
-       - /var/lib/onlyoffice/documentserver/App_Data/cache/files
-       - /var/www/onlyoffice/documentserver-example/public/files
+       - /var/www/univaultoffice/Data
+       - /var/log/univaultoffice
+       - /var/lib/univaultoffice/documentserver/App_Data/cache/files
+       - /var/www/univaultoffice/documentserver-example/public/files
        - /usr/share/fonts
        
-  onlyoffice-rabbitmq:
-    container_name: onlyoffice-rabbitmq
+  univaultoffice-rabbitmq:
+    container_name: univaultoffice-rabbitmq
     image: rabbitmq
     restart: always
     expose:
       - '5672'
 
-  onlyoffice-dameng:
-    container_name: onlyoffice-dameng
+  univaultoffice-dameng:
+    container_name: univaultoffice-dameng
     build:
       context: .
       dockerfile: damengdb.Dockerfile
