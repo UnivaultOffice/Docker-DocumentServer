@@ -21,7 +21,7 @@ on:
         default: true
 
 env:
-  COMPANY_NAME: "onlyoffice"
+  COMPANY_NAME: "univaultoffice"
   PRODUCT_NAME: "documentserver"
   VERSION: ${{ github.event.inputs.tag }}
   RELEASE_NUMBER: ${{ github.event.inputs.release_number }}
@@ -77,7 +77,7 @@ jobs:
           repository: ${{ env.COMPANY_NAME }}/${{ env.PRODUCT_NAME }}${{ matrix.edition }}
 
   release_4enterprise:
-    name: "Release image: onlyoffice4enterprise"
+    name: "Release image: univaultoffice4enterprise"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -99,8 +99,8 @@ jobs:
         shell: bash
         run: |
           export TAG=${VERSION%.*}.${RELEASE_NUMBER}
-          docker buildx imagetools create --tag onlyoffice4enterprise/documentserver-ee:${TAG} \
-                                                onlyoffice/4testing-documentserver-ee:${VERSION}
+          docker buildx imagetools create --tag univaultoffice4enterprise/documentserver-ee:${TAG} \
+                                                UnivaultOffice/4testing-documentserver-ee:${VERSION}
 
   build-nonexample:
     name: "Release image: DocumentServer${{ matrix.edition }}-nonExample"

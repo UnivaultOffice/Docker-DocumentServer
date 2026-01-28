@@ -18,5 +18,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         run: |
           gh workflow run rebuild.yml \
-              --repo ONLYOFFICE/Docker-DocumentServer \
+              --repo UnivaultOffice/Docker-DocumentServer \
               -f repo=4test

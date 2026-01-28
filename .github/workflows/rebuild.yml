@@ -20,12 +20,12 @@ permissions:
   # Technically read access while waiting for images should be more than enough. However,
   # there is a bug in GitHub Actions/Packages and in case private repositories are used, you get a permission
   # denied error when attempting to just pull private image, changing the token permission to write solves the
-  # issue. This is not dangerous, because if it is for "ONLYOFFICE/Docker-DocumentServer", only maintainers can use ds-rebuild.yaml
+  # issue. This is not dangerous, because if it is for "UnivaultOffice/Docker-DocumentServer", only maintainers can use ds-rebuild.yaml
   # If it is for a fork, then the token is read-only anyway.
   packages: read
 
 env: 
-  COMPANY_NAME: "onlyoffice"
+  COMPANY_NAME: "univaultoffice"
   PRODUCT_NAME: "documentserver" 
   REGISTRY_URL: "https://hub.docker.com/v2/repositories"  
 
